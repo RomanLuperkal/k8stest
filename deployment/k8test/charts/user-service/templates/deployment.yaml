@@ -1,28 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "front-service.fullname" . }}
+  name: {{ include "user-service.fullname" . }}
   labels:
-    app: {{ include "front-service.name" . }}
+    app: {{ include "user-service.name" . }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      app: {{ include "front-service.name" . }}
+      app: {{ include "user-service.name" . }}
   template:
     metadata:
       labels:
-        app: {{ include "front-service.name" . }}
+        app: {{ include "user-service.name" . }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - containerPort: {{ .Values.ports.front_service_port }}
+            - containerPort: {{ .Values.ports.user_service_port }}
           env:
+
+            - name: SPRING_PROFILES_ACTIVE
+              value: local
           {{- if .Values.probe.enabled -}}
           {{- with .Values.livenessProbe }}
           livenessProbe:

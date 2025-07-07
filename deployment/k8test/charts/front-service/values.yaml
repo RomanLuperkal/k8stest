@@ -1,14 +1,12 @@
-global:
-  disableStandardLabels: true
-  ports:
-    front_service_port: 8080
+ports:
+  front_service_port: 8080
 
 replicaCount: 1
 
 image:
-  repository: nginx
+  repository: front-service
   pullPolicy: IfNotPresent
-  tag: ""
+  tag: latest
 
 imagePullSecrets: []
 nameOverride: ""
@@ -29,21 +27,23 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 8080
+  targetPort: 8080
 
 ingress:
-  enabled: false
-  className: ""
+  enabled: true
+  className: nginx
   annotations: {}
   hosts:
-    - host: chart-example.local
+    - host: test-k8s.local
       paths:
         - path: /
-          pathType: ImplementationSpecific
+          pathType: Prefix
   tls: []
 
 resources: {}
-
+probe:
+  enabled: false
 livenessProbe:
   httpGet:
     path: /

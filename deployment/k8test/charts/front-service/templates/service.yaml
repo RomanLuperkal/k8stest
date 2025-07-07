@@ -3,13 +3,10 @@ kind: Service
 metadata:
   name: {{ include "front-service.fullname" . }}
   labels:
-    app: {{- include "front-service.name" . }}
+    app: {{ include "front-service.name" . }}
 spec:
-  type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+      targetPort: {{ .Values.service.targetPort }}
   selector:
     app: {{ include "front-service.name" . }}
