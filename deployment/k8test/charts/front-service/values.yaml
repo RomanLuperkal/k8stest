@@ -1,5 +1,5 @@
 ports:
-  front_service_port: 8080
+  front_service_port: 8081
 
 replicaCount: 1
 
@@ -27,8 +27,8 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 8080
-  targetPort: 8080
+  port: 8081
+  targetPort: 8081
 
 ingress:
   enabled: true
