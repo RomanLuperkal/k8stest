@@ -23,9 +23,10 @@ spec:
           ports:
             - containerPort: {{ .Values.ports.user_service_port }}
           env:
-
             - name: SPRING_PROFILES_ACTIVE
               value: local
+            - name: USER_SERVICE_PORT
+              value: "8080"
           {{- if .Values.probe.enabled -}}
           {{- with .Values.livenessProbe }}
           livenessProbe:

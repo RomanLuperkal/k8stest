@@ -22,7 +22,14 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.ports.front_service_port }}
+          volumeMounts:
+            - name: {{ include "front-service.name" . }}
+              mountPath: /config
           env:
+            - name: USER_SERVICE_URL
+              value: {{ .Values.user_service.base_url }}
+           # - name: FRONT_SERVICE_PORT
+           #   value: {{ .Values.ports.front_service_port | quote }}
           {{- if .Values.probe.enabled -}}
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -32,16 +39,8 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-          {{- with .Values.resources }}
-          resources:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
-      {{- with .Values.volumes }}
+      {{- end }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- end }}
+        - name: {{ include "front-service.name" . }}
+          configMap:
+            name: {{ include "front-service.fullname" . }}-config
