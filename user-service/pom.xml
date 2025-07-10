@@ -12,7 +12,10 @@
     <name>user-service</name>
 
     <dependencies>
-
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

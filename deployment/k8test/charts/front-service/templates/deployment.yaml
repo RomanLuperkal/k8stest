@@ -23,13 +23,13 @@ spec:
           ports:
             - containerPort: {{ .Values.ports.front_service_port }}
           volumeMounts:
-            - name: {{ include "front-service.name" . }}
+            - name: {{ include "user-service.name" . }}
               mountPath: /config
           env:
             - name: USER_SERVICE_URL
               value: {{ .Values.user_service.base_url }}
-           # - name: FRONT_SERVICE_PORT
-           #   value: {{ .Values.ports.front_service_port | quote }}
+            - name: FRONT_SERVICE_PORT
+              value: {{ .Values.ports.front_service_port | quote }}
           {{- if .Values.probe.enabled -}}
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -41,6 +41,6 @@ spec:
           {{- end }}
       {{- end }}
       volumes:
-        - name: {{ include "front-service.name" . }}
+        - name: {{ include "user-service.name" . }}
           configMap:
-            name: {{ include "front-service.fullname" . }}-config
+            name: {{ include "user-service.fullname" . }}-config

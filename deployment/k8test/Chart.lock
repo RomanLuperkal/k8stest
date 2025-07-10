@@ -1,0 +1,12 @@
+dependencies:
+- name: postgresql
+  repository: file://charts/postgres
+  version: 0.1.0
+- name: front-service
+  repository: file://charts/front-service
+  version: 0.1.0
+- name: user-service
+  repository: file://charts/user-service
+  version: 0.1.0
+digest: sha256:1e73684e9bd20e1b4adc598a0d68aa8439ee6d24edc850315d4507ff7d6905f7
+generated: "2025-07-10T16:06:51.4625141+03:00"

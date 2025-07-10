@@ -22,11 +22,20 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.ports.user_service_port }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "user-service.fullname" . }}-env
           env:
-            - name: SPRING_PROFILES_ACTIVE
-              value: local
-            - name: USER_SERVICE_PORT
-              value: "8080"
+            - name: POSTGRES_USER  # Имя переменной в Pod
+              valueFrom: # Указание источника
+                secretKeyRef:
+                  name: postgres-sc  # Имя Secret
+                  key: POSTGRES_USER        # Ключ в Secret
+            - name: POSTGRES_PASSWORD  # Имя переменной в Pod
+              valueFrom: # Указание источника
+                secretKeyRef:
+                  name: postgres-sc  # Имя Secret
+                  key: POSTGRES_PASSWORD        # Ключ в Secret
           {{- if .Values.probe.enabled -}}
           {{- with .Values.livenessProbe }}
           livenessProbe:
@@ -44,8 +53,8 @@ spec:
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- with .Values.volumes }}
+      {{- end }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
-      {{- end }}
+        - name: {{ include "user-service.name" . }}
+          configMap:
+            name: {{ include "user-service.fullname" . }}-config

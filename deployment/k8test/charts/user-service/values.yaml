@@ -3,6 +3,11 @@ replicaCount: 1
 ports:
   user_service_port: 8080
 
+user_service:
+  DB_HOST: postgresql-0.postgresql.default.svc.cluster.local
+  DB_PORT: 5432
+  DB_NAME: db1
+
 image:
   repository: user-service
   pullPolicy: IfNotPresent
