@@ -4,7 +4,12 @@ metadata:
   name: {{ include "user-service.name" . }}
 spec:
   ports:
-    - port: {{ .Values.service.port }}
+    - name: app
+      port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
+
+    - name: actuator
+      port: {{ .Values.livenessProbe.httpGet.port }}
+      targetPort: {{ .Values.livenessProbe.httpGet.port }}
   selector:
     app: {{ include "user-service.name" . }}

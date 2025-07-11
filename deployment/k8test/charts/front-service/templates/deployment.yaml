@@ -22,6 +22,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.ports.front_service_port }}
+              name: app
+            - containerPort: {{ .Values.livenessProbe.httpGet.port }}
+              name: actuator
           volumeMounts:
             - name: {{ include "user-service.name" . }}
               mountPath: /config
@@ -30,7 +33,13 @@ spec:
               value: {{ .Values.user_service.base_url }}
             - name: FRONT_SERVICE_PORT
               value: {{ .Values.ports.front_service_port | quote }}
-          {{- if .Values.probe.enabled -}}
+          startupProbe: #проба старта приложения
+            httpGet:
+              port: 8071
+              path: /health
+            failureThreshold: 30
+            periodSeconds: 10
+            initialDelaySeconds: 30
           {{- with .Values.livenessProbe }}
           livenessProbe:
             {{- toYaml . | nindent 12 }}
@@ -39,7 +48,6 @@ spec:
           readinessProbe:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      {{- end }}
       volumes:
         - name: {{ include "user-service.name" . }}
           configMap:

@@ -12,11 +12,20 @@ spring:
 
   datasource:
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:test}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:db1}
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD}
 
   liquibase:
     change-log: classpath:changelog/changelog-master.xml
+
+management:
+  server:
+    port: 8070
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health,prometheus
 
 

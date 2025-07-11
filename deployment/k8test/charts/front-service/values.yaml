@@ -59,12 +59,16 @@ probe:
   enabled: false
 livenessProbe:
   httpGet:
-    path: /
-    port: http
+    port: 8071
+    path: /health
+  failureThreshold: 3
+  periodSeconds: 10
 readinessProbe:
   httpGet:
-    path: /
-    port: http
+    port: 8071
+    path: /health
+  failureThreshold: 3
+  periodSeconds: 10
 
 autoscaling:
   enabled: false

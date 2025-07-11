@@ -7,3 +7,12 @@ spring:
 
 user-service:
   url : ${USER_SERVICE_URL:http:\\localhost:8080}
+
+management:
+  server:
+    port: 8071
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health,prometheus

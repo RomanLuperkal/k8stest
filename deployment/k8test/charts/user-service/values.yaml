@@ -52,12 +52,18 @@ probe:
   enabled: false
 livenessProbe:
   httpGet:
-    path: /
-    port: http
+    port: 8070
+    path: /health
+  initialDelaySeconds: 30
+  failureThreshold: 3
+  periodSeconds: 10
 readinessProbe:
-  httpGet:
-    path: /
-    port: http
+  exec:
+    command: ['sh', '-c', 'pg_isready -U admin']
+  initialDelaySeconds: 10        # Время на запуск сервера
+  periodSeconds: 5               # Период выполнения команды
+  failureThreshold: 3            # После трёх неуспешных проб K8s выключит трафик на под
+  timeoutSeconds: 1
 
 autoscaling:
   enabled: false
