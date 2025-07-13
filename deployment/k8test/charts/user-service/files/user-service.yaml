@@ -19,4 +19,13 @@ spring:
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
 
+management:
+  server:
+    port: 8070
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: health,prometheus
+
 
