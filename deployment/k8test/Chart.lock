@@ -8,5 +8,11 @@ dependencies:
 - name: user-service
   repository: file://charts/user-service
   version: 0.1.0
-digest: sha256:1e73684e9bd20e1b4adc598a0d68aa8439ee6d24edc850315d4507ff7d6905f7
-generated: "2025-07-10T16:06:51.4625141+03:00"
+- name: kafka
+  repository: file://charts/kafka
+  version: 1.0.0
+- name: kafka-ui
+  repository: file://charts/kafka-ui
+  version: 1.0.0
+digest: sha256:9610827cd0927bbbccf3f19f5f234b5b0385fae556d0e0e0c125df0604e10edf
+generated: "2025-08-20T23:27:52.3077181+03:00"
