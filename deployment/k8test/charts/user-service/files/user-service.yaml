@@ -17,7 +17,7 @@ spring:
     password: ${POSTGRES_PASSWORD}
 
   liquibase:
-    change-log: classpath:db/changelog/changelog-master.xml
+    change-log: classpath:changelog/changelog-master.xml
 
 management:
   server:
@@ -28,4 +28,5 @@ management:
       exposure:
         include: health,prometheus
 
-
+kafka:
+  host: kafka-0.kafka-svc.default.svc.cluster.local:9092

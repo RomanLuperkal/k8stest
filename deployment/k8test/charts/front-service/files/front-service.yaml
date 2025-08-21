@@ -16,3 +16,6 @@ management:
       base-path: /
       exposure:
         include: health,prometheus
+
+kafka:
+  host: kafka-0.kafka-svc.default.svc.cluster.local:9092

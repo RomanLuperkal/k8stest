@@ -29,6 +29,9 @@ spec:
               name: app
             - containerPort: {{ .Values.livenessProbe.httpGet.port }}
               name: actuator
+          volumeMounts:
+            - name: {{ include "user-service.name" . }}
+              mountPath: /config
           envFrom:
             - configMapRef:
                 name: {{ include "user-service.fullname" . }}-env
@@ -65,10 +68,7 @@ spec:
             failureThreshold: 3
             periodSeconds: 10
             initialDelaySeconds: 30
-          {{- with .Values.volumeMounts }}
-          volumeMounts:
-            {{- toYaml . | nindent 12 }}
-          {{- end }}
+
       volumes:
         - name: {{ include "user-service.name" . }}
           configMap:
