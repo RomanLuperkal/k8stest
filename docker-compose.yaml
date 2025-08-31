@@ -6,7 +6,7 @@ services:
     hostname: kafka
     container_name: kafka
     ports:
-      - "9092:9092"
+      - "9091:9091"
       - "9093:9093"
     environment:
       KAFKA_NODE_ID: 1
@@ -16,10 +16,10 @@ services:
       KAFKA_CONTROLLER_LISTENER_NAMES: "CONTROLLER"
 
       # Добавим CLIENT в listeners
-      KAFKA_LISTENERS: "BROKER://0.0.0.0:9094,CLIENT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093"
+      KAFKA_LISTENERS: "BROKER://0.0.0.0:9094,CLIENT://0.0.0.0:9091,CONTROLLER://0.0.0.0:9093"
 
       # Теперь BROKER — для Docker, CLIENT — для внешних клиентов (с хоста)
-      KAFKA_ADVERTISED_LISTENERS: "BROKER://kafka:9094,CLIENT://localhost:9092"
+      KAFKA_ADVERTISED_LISTENERS: "BROKER://kafka:9094,CLIENT://localhost:9091"
 
       # Соответствие протоколов: BROKER и CLIENT — PLAINTEXT, CONTROLLER — внутренний
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "BROKER:PLAINTEXT,CLIENT:PLAINTEXT,CONTROLLER:PLAINTEXT"
@@ -41,7 +41,7 @@ services:
     image: provectuslabs/kafka-ui:latest
     container_name: kafka-ui
     ports:
-      - "8081:8080"
+      - "7071:8080"
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9094
